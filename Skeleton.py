@@ -184,6 +184,14 @@ def weightSort(weights):
 def countComponents([vertices, treeEdges]):
     components = {0:[]}
     count = 0
+
+    # check no invalid edges
+    verticesInEdges = [edge[0] for edge in treeEdges]
+    verticesInEdges += [edge[1] for edge in treeEdges]
+    for vertex in verticesInEdges:
+        if vertex not in vertices:
+            print 'Error: edges in treeEdges not covered by given vertices'
+            return -1
     
     for [u,v] in treeEdges:
         for num in components.keys():
@@ -199,7 +207,7 @@ def countComponents([vertices, treeEdges]):
         components[count].append(v)
         count += 1
             
-    return count, components
+    return count
 
 #
 # End of coursework 2
