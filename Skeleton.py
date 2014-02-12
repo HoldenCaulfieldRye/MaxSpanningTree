@@ -111,21 +111,23 @@ def MutualInformation(jP):
 
     for i in range(len(mD1)):
         for j in range(len(mD2)):
-            if 0 in (mD1[i], mD2[j]): continue
-            
-            mi += jP[i][j] * log(jP[i][j]/(mD1[i]*mD2[j]), 2)
-
+            if 0 in (mD1[i], mD2[j], jP[i][j]): continue
+            mi += jP[i][j] * (log(jP[i][j]/(mD1[i]*mD2[j]))/log(2))
     # end of coursework 2 task 1
     return mi
+
 
 # Construct a dependency matrix for all the variables
 def DependencyMatrix(theData, noVariables, noStates):
     MIMatrix = zeros((noVariables, noVariables))
 # Coursework 2 task 2 should be inserted here
+# WARNING: maybe the transpose of what you're computing is actually
+#          what is required
     for var1 in range(noVariables):
         for var2 in range(noVariables):
             if var1==var2: continue
             jPT = JPT(theData, var1, var2, noStates)
+            MIMatrix[var1][var2] = MutualInformation(jPT)
 # end of coursework 2 task 2
     return MIMatrix
 
@@ -134,8 +136,8 @@ def DependencyMatrix(theData, noVariables, noStates):
 def DependencyList(depMatrix):
     depList=[]
 # Coursework 2 task 3 should be inserted here
-    
-
+    depList = [[depMatrix[i][j], i, j] for i in range(len(depMatrix)) for j in range(len(depMatrix[0]))]
+    depList2 = sorted(depList, reverse=True)
 # end of coursework 2 task 3
     return array(depList2)
 #
@@ -143,9 +145,62 @@ def DependencyList(depMatrix):
 # Coursework 2 task 4
 
 def SpanningTreeAlgorithm(depList, noVariables):
+    # WARNING: is this the correct form for spanningTree?
     spanningTree = []
-  
+    vertices = range(noVariables)
+    weights = createWeightDict(depList)
+    edges = weightSort(weights)
+    treeEdges = []
+    spanningTree = [vertices, treeEdges]
+    count = countComponents(vertices, treeEdges)
+    
+    while count > 0:
+        if edges==[]:
+            print 'not enough edges to span a tree!'
+            break
+        treeEdges.append(edges[0])
+        del edges[0]
+        if count - countComponents(vertices, treeEdges) == 1:
+            count -= 1
+        elif count == countComponents(vertices, treeEdges):
+            del treeEdges[-1]
+        else:
+            print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
+            break
+
+    if [vertices, treeEdges] != spanningTree:
+        print "Error: spanningTree isn't a pointer; treeEdges has been modified but this hasn't updated spanningTree"
+        
     return array(spanningTree)
+
+
+def createWeightDict(depList):
+    return dict(([depList[i][1], depList[i][2]], depList[i][0]) for i in range(len(depList))]
+
+def weightSort(weights):
+    return sort(weights.keys(), key = lambda edge: -1*weights[edge])
+
+
+def countComponents([vertices, treeEdges]):
+    components = {0:[]}
+    count = 0
+    
+    for [u,v] in treeEdges:
+        for num in components.keys():
+            if u in components[num]:
+                components[num].append(v)
+                break
+            elif v in components[num]:
+                components[num].append(u)
+                break
+        # reach here iif no vertex of the edge is in any component
+        components[count] = []
+        components[count].append(u)
+        components[count].append(v)
+        count += 1
+            
+    return count, components
+
 #
 # End of coursework 2
 #
