@@ -25,7 +25,7 @@ print "DependencyList(depMatrix) =", depList
 vertices = range(noVariables)
 
 print 'inspect that createWeightDict() is correct by comparing the following:'
-weights = createWeightDict(depList)
+weights = createWeightDict(depList, noVariables)
 print 'depList', depList
 print 'weights', weights
 print ''

@@ -121,8 +121,6 @@ def MutualInformation(jP):
 def DependencyMatrix(theData, noVariables, noStates):
     MIMatrix = zeros((noVariables, noVariables))
 # Coursework 2 task 2 should be inserted here
-# WARNING: maybe the transpose of what you're computing is actually
-#          what is required
     for var1 in range(noVariables):
         for var2 in range(noVariables):
             if var1==var2: continue
@@ -148,7 +146,7 @@ def SpanningTreeAlgorithm(depList, noVariables):
     # WARNING: is this the correct form for spanningTree?
     spanningTree = []
     vertices = range(noVariables)
-    weights = createWeightDict(depList)
+    weights = createWeightDict(depList, noVariables)
     edges = weightSort(weights)
     treeEdges = []
     spanningTree = [vertices, treeEdges]
@@ -174,14 +172,33 @@ def SpanningTreeAlgorithm(depList, noVariables):
     return array(spanningTree)
 
 
-def createWeightDict(depList):
-    return dict(([depList[i][1], depList[i][2]], depList[i][0]) for i in range(len(depList))]
+# def undirectedDependencyList(depList):
+#     for i in range(len(depList)):
+#         for j in range(i):
+#             if depList[i][j] >= depList[j][i]:
+                
+                
+#     for i,j in zip(range(len(depList))):
+        
+#             depList.append([depMatrix[i][j], i, j])
+#     depList2 = sorted(depList, reverse=True)
+#     return depList2
+    
+
+def createWeightDict(depList, noVariables):
+    weights = dict(((depList[i][1], depList[i][2]), depList[i][0]) for i in range(len(depList)))
+    for i in range(noVariables):
+        for j in range(i):
+            if weights[(i,j)] >= weights[(j,i)]:
+                del weights[(j,i)]
+            else: del weights[(i,j)]
+
 
 def weightSort(weights):
     return sort(weights.keys(), key = lambda edge: -1*weights[edge])
 
 
-def countComponents([vertices, treeEdges]):
+def countComponents(vertices, treeEdges):
     components = {0:[]}
     count = 0
 
