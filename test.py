@@ -20,6 +20,10 @@ print depMatrix
 depList = DependencyList(depMatrix)
 print "DependencyList(depMatrix) =", depList
 
+print ''
+print ''
+print ''
+
 ################################
 
 vertices = range(noVariables)
@@ -27,7 +31,9 @@ vertices = range(noVariables)
 print 'inspect that createWeightDict() is correct by comparing the following:'
 weights = createWeightDict(depList, noVariables)
 print 'depList', depList
-print 'weights', weights
+print 'weights'
+for key in weights.keys():
+    print key, weights[key]
 print ''
 
 print 'inspect that weightSort() is correct by making sure the following is in descending order:'

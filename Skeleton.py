@@ -193,6 +193,8 @@ def createWeightDict(depList, noVariables):
                 del weights[(j,i)]
             else: del weights[(i,j)]
 
+    return weights
+
 
 def weightSort(weights):
     return sort(weights.keys(), key = lambda edge: -1*weights[edge])
