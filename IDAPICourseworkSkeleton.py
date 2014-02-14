@@ -144,17 +144,11 @@ def DependencyList(depMatrix):
 # Coursework 2 task 4
 
 def SpanningTreeAlgorithm(depList, noVariables):
-    # WARNING: is this the correct form for spanningTree?
-    spanningTree = []
-    vertices = range(noVariables)
+    vertices, treeEdges = range(noVariables), []
     weights = createWeightDict(depList, noVariables)
     edges = weightSort(weights)
-    treeEdges = []
     spanningTree = [vertices, treeEdges]
     count = len(vertices)
-
-    # print 'initialised vertices, treeEdges to', vertices, treeEdges
-    
     while count != 1: # while number of components is not 1
         if edges==[]: break
         treeEdges.append(edges[0])
@@ -162,8 +156,6 @@ def SpanningTreeAlgorithm(depList, noVariables):
         if count - countComponents(vertices, treeEdges) == 1: count -= 1
         elif count == countComponents(vertices, treeEdges): del treeEdges[-1]
         else: break
-
-        
     return array(spanningTree)
 
 def createWeightDict(depList, noVariables):
@@ -186,13 +178,9 @@ def validEdges(vertices, edges):
     return True
 
 def countComponents(vertices, edges):
-    if not validEdges(vertices, edges): return -1 # check no invalid edges
-
-    # initialise components
     components = OrderedDict()
     components = initialiseComponents(vertices)
-
-    # count components
+    if not validEdges(vertices, edges): return -1 # check no invalid edges
     for [u,v] in edges:
         evalu = evaluateEdge(components, [u,v])
         if evalu[0] == 'edge fully contained in component': continue
@@ -214,7 +202,6 @@ def evaluateEdge(components, edge):
             else: return 'connects components', num, edge[1]
         elif edge[1] in components[num]: # edge[0] not in components[num]
                 return 'connects components', num, edge[0]
-
             
 # This function is why I use an OrderedDict: don't need to search through all keys since acquireeVertex is definitely not in num-th component nor any preceding ones
 def merge(components, acquirerIndex, acquireeVertex):
@@ -228,9 +215,10 @@ def merge(components, acquirerIndex, acquireeVertex):
     del components[key]
     return components
 
+############################################################################
+#                 End of Coursework 2                                       
+############################################################################
 
-#
-# End of coursework 2
 #
 # Coursework 3 begins here
 #
