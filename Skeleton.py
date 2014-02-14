@@ -153,32 +153,32 @@ def SpanningTreeAlgorithm(depList, noVariables):
     spanningTree = [vertices, treeEdges]
     count = len(vertices)
 
-    print 'initialised vertices, treeEdges to', vertices, treeEdges
+    # print 'initialised vertices, treeEdges to', vertices, treeEdges
     
     while count > 0:
         if edges==[]:
-            print 'not enough edges to span a tree!'
+            # print 'not enough edges to span a tree!'
             break
-        print 'updated treeEdges from'
-        print treeEdges 
+        # print 'updated treeEdges from'
+        # print treeEdges 
         treeEdges.append(edges[0])
         del edges[0]
-        print 'to'
-        print treeEdges
+        # print 'to'
+        # print treeEdges
         if count - countComponents(vertices, treeEdges) == 1:
-            print 'adding that edge linked 2 components!'
+            # print 'adding that edge linked 2 components!'
             count -= 1
-            print ''
+            # print ''
         elif count == countComponents(vertices, treeEdges):
             del treeEdges[-1]
-            print 'that edge wouldn\'t link components, getting rid of it'
-            print ''
+            # print 'that edge wouldn\'t link components, getting rid of it'
+            # print ''
         else:
-            print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
+            # print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
             break
 
     if [vertices, treeEdges] != spanningTree:
-        print "Error: spanningTree isn't a pointer; treeEdges has been modified but this hasn't updated spanningTree"
+        # print "Error: spanningTree isn't a pointer; treeEdges has been modified but this hasn't updated spanningTree"
         
     return array(spanningTree)
 
@@ -206,17 +206,17 @@ def validEdges(vertices, edges):
     for vertex in verticesInEdges:
         count = vertices.count(vertex)
         if count!=1:
-            print '%i appears %i times in vertex set!' % (vertex, count)
+            # print '%i appears %i times in vertex set!' % (vertex, count)
             return False
     return True
 
 
 def countComponents(vertices, edges):
-    print '\n\n\nhello, counting components in', vertices, edges
+    # print '\n\n\nhello, counting components in', vertices, edges
 
     # check no invalid edges
     if not validEdges(vertices, edges):
-        print 'Error: edges in edges not covered by given vertices'
+        # print 'Error: edges in edges not covered by given vertices'
         return -1
 
     # initialise components
@@ -225,8 +225,8 @@ def countComponents(vertices, edges):
 
     # count components
     for [u,v] in edges:
-        print '#components = ', len(components.keys())
-        print 'evaluating [%i, %i]' % (u, v)
+        # print '#components = ', len(components.keys())
+        # print 'evaluating [%i, %i]' % (u, v)
         evalu = evaluateEdge(components, [u,v])
         if evalu[0] == 'edge fully contained in component':
         elif evalu[0] == 'connects components':
@@ -245,15 +245,15 @@ def evaluateEdge(components, [u,v]):
     for num in components.keys():
         if u in components[num]:
             if v in components[num]:
-                print '%i and %i are both in component[%i] so no merging occurs' % (u, v, num)
+                # print '%i and %i are both in component[%i] so no merging occurs' % (u, v, num)
                 return 'edge fully contained in component'
             else: # v not in components[num]
-                print '%i is in component[%i] but %i isn\'t' % (u, num, v)
-                print 'so merge vertex %i\'s component into component[%i]' % (v, num)
+                # print '%i is in component[%i] but %i isn\'t' % (u, num, v)
+                # print 'so merge vertex %i\'s component into component[%i]' % (v, num)
                 return 'connects components', num, v
         elif v in components[num]: # u not in components[num]
-                print '%i is in component[%i] but no %i' % (v, num, u)
-                print 'so merge vertex %i\'s component into component[%i]' % (u, num)
+                # print '%i is in component[%i] but no %i' % (v, num, u)
+                # print 'so merge vertex %i\'s component into component[%i]' % (u, num)
                 return 'connects components', num, u
 
             
@@ -266,7 +266,7 @@ def merge(components, acquirerIndex, acquireeVertex):
             found = True
             break
     if found = False:
-        print 'Error: vertex %i not found in components' % (acquireeVertex)
+        # print 'Error: vertex %i not found in components' % (acquireeVertex)
         return -1
     components[acquirerIndex] += components[key] 
     del components[key]
