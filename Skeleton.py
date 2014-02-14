@@ -158,10 +158,12 @@ def SpanningTreeAlgorithm(depList, noVariables):
         if edges==[]:
             print 'not enough edges to span a tree!'
             break
-        print 'updated treeEdges from', treeEdges 
+        print 'updated treeEdges from'
+        print treeEdges 
         treeEdges.append(edges[0])
         del edges[0]
-        print 'to', treeEdges
+        print 'to'
+        print treeEdges
         if count - countComponents(vertices, treeEdges) == 1:
             print 'adding that edge linked 2 components!'
             count -= 1
@@ -226,7 +228,7 @@ def countComponents(vertices, treeEdges):
                 print v, 'is in', components[num]
                 vComponent = num
 
-        if uComponent == vComponent:# continue
+                if uComponent == vComponent: #continue
             print '%i, %i do both belong to component[%i]: %s' % (u, v, uComponent, components[uComponent])
             print 'so #components stays the same at', count
         elif uComponent == -1 and vComponent ==-2:
