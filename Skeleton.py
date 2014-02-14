@@ -188,21 +188,22 @@ def SpanningTreeAlgorithm(depList, noVariables):
 def createWeightDict(depList, noVariables):
     weights = dict(((depList[i][1], depList[i][2]), depList[i][0]) for i in range(len(depList)))
     for i in range(noVariables):
-        for j in range(i):
-            if weights[(i,j)] >= weights[(j,i)]:
-                del weights[(j,i)]
-            else: del weights[(i,j)]
+        for j in range(i): del weights[(j,i)] # remove duplicate edges
+        del weights[(i,i)]                    # remove loop edges
 
     return weights
 
 
 def weightSort(weights):
-    return sort(weights.keys(), key = lambda edge: -1*weights[edge])
+    try:
+        return sorted(weights.keys(), key = lambda edge: -1*weights[edge])
+    except:
+        return weights
 
 
 def countComponents(vertices, treeEdges):
     components = {0:[]}
-    count = 0
+    count = len(vertices)
 
     # check no invalid edges
     verticesInEdges = [edge[0] for edge in treeEdges]
@@ -213,19 +214,19 @@ def countComponents(vertices, treeEdges):
             return -1
     
     for [u,v] in treeEdges:
+        print '#components = ', count
+        print 'evaluating [%i, %i]' % (u, v) 
         for num in components.keys():
-            if u in components[num]:
+            if (u in components[num], v in components[num]):
+                print '%i and %i are in components[%i]' % (u, v, num)
                 components[num].append(v)
-                break
-            elif v in components[num]:
-                components[num].append(u)
-                break
-        # reach here iif no vertex of the edge is in any component
-        components[count] = []
-        components[count].append(u)
-        components[count].append(v)
-        count += 1
-            
+                print 'so #components = %i stays same' % (count)
+        # reach iif no vertex in edge is in any component
+        print 'none of this edge\'s vertices are in', components, 'so #components still same, and adding new component to components, so now components: '
+        components[count-len(vertices)] = []
+        components[count-len(vertices)].append(u)
+        components[count-len(vertices)].append(v)
+        print components
     return count
 
 #

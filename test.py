@@ -28,7 +28,7 @@ print ''
 
 vertices = range(noVariables)
 
-print 'inspect that createWeightDict() is correct by comparing the following:'
+print 'testing createWeightDict()...'
 weights = createWeightDict(depList, noVariables)
 print 'depList', depList
 print 'weights'
@@ -42,18 +42,19 @@ print edges
 
 treeEdges = []
 print 'testing that countComponents is correct'
-try:
-    if countComponents(vertices, treeEdges) != len(vertices):
-        print 'Error: countComponents(vertices, []) should be len(vertices)'
-    elif countComponents([1,2,3], [[1,2],[2,3]]) != 1:
-        print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1'
-    elif countComponents([1,2,3], [[2,3]]) != 2:
-        print 'Error: countComponents([1,2,3], [[2,3]]) should be 2'
-    elif countComponents([1,2,3], [[1,5],[7,4],[2,3]]) != 1:
-        print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1'
-    else:
-        print 'countComponents seems to be working fine'
-        print ''
-        print 'but have you inspected that createWeightDict and weightSort are correct?'
-except:
-    print 'damn, code for countComponents doesn\'t compile'
+# try:
+if countComponents(vertices, treeEdges) != len(vertices):
+    print 'Error: countComponents(%s, []) should be len(vertices)=%i, but it\'s %i' % (vertices, len(vertices), countComponents(vertices, treeEdges))
+if countComponents([1,2,3], [[1,2],[2,3]]) != 1:
+    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s %i' % (countComponents([1,2,3], [[1,2],[2,3]]))
+if countComponents([1,2,3], [[2,3]]) != 2:
+    print 'Error: countComponents([1,2,3], [[2,3]]) should be 2, but it\'s %i' % (countComponents([1,2,3], [[2,3]]))
+if countComponents([1,2,3], [[1,5],[7,4],[2,3]]) != 1:
+    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s %i' % (countComponents([1,2,3], [[1,5],[7,4],[2,3]]))
+    # else:
+    #     works = True
+    #     print 'countComponents seems to be working fine'
+    #     print ''
+    #     print 'but have you inspected that createWeightDict and weightSort are correct?'
+# except:
+#     print 'damn, code for countComponents doesn\'t compile'
