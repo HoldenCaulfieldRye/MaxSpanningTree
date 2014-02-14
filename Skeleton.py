@@ -3,6 +3,7 @@
 # Coursework in Python 
 from Library import *
 from numpy import *
+from collections import OrderedDict
 import operator
 #
 # Coursework 1 begins here
@@ -180,7 +181,8 @@ def SpanningTreeAlgorithm(depList, noVariables):
         print "Error: spanningTree isn't a pointer; treeEdges has been modified but this hasn't updated spanningTree"
         
     return array(spanningTree)
-    
+
+
 
 def createWeightDict(depList, noVariables):
     weights = dict(((depList[i][1], depList[i][2]), depList[i][0]) for i in range(len(depList)))
@@ -197,73 +199,69 @@ def weightSort(weights):
     except:
         return weights
 
-
-def countComponents(vertices, treeEdges):
-    print ''
-    print ''
-    print ''
-    print 'hello, counting components in', vertices, treeEdges
-    components = {}
-
-    # initialise components
-    for vertex in vertices:
-        components[vertex] = [vertex]
-        
-    uComponent, vComponent = -1, -2
-
-    # check no invalid edges
-    if invalidEdges(vertices, treeEdges):
-        print 'Error: edges in treeEdges not covered by given vertices'
-        return -1
-        
-    verticesInEdges = [edge[0] for edge in treeEdges]
-    verticesInEdges += [edge[1] for edge in treeEdges]
+    
+def validEdges(vertices, edges):
+    verticesInEdges = [edge[0] for edge in edges]
+    verticesInEdges += [edge[1] for edge in edges]
     for vertex in verticesInEdges:
         if vertex not in vertices:
-    
-    for [u,v] in treeEdges:
-        print '#components = ', count
+            return False
+    return True
+
+
+def countComponents(vertices, edges):
+    print ''
+    print ''
+    print ''
+    print 'hello, counting components in', vertices, edges
+
+    # check no invalid edges
+    if not validEdges(vertices, edges):
+        print 'Error: edges in edges not covered by given vertices'
+        return -1
+
+    # initialise components
+    components = OrderedDict()
+    components = initialiseComponents(vertices)
+
+    # count components
+    for [u,v] in edges:
+        print '#components = ', len(components.keys())
         print 'evaluating [%i, %i]' % (u, v) 
         for num in components.keys():
             if u in components[num]:
-                assert(uComponent==-1)
-                print u, 'is in', components[num]
-                uComponent = num
-            if v in components[num]:
-                assert(vComponent==-2)
-                print v, 'is in', components[num]
-                vComponent = num
-
-                if uComponent == vComponent: #continue
-            print '%i, %i do both belong to component[%i]: %s' % (u, v, uComponent, components[uComponent])
-            print 'so #components stays the same at', count
-        elif uComponent == -1 and vComponent ==-2:
-            print '%i, %i do not belong to any component: %s' % (u, v, components)
-            components[len(components.keys())] = []
-            components[len(components.keys())-1].append(u)
-            components[len(components.keys())-1].append(v)
-            print 'so created a new component: ', components
-            print 'so #components decremented from', count
-            count -= 1
-            print 'to', count
-        elif uComponent != -1 and vComponent == -2:
-            print '%i belongs to component[%i]' % (u, uComponent)
-            components[uComponent].append(v)
-            print 'so adding %i to it too: components: %s' % (v, components)
-            print 'so #components decremented from', count
-            count -= 1
-            print 'to', count
-        elif uComponent == -1 and vComponent != -2:
-            print '%i belongs to component[%i]' % (v, vComponent)
-            components[vComponent].append(u)
-            print 'so adding %i to it too: components: %s' % (u, components)
-            print 'so #components decremented from', count
-            count -= 1
-            print 'to', count
-            
-        uComponent, vComponent = -1, -2
-
+                if v in components[num]:
+                    print '%i and %i are both in component[%i]' % (u, v, num)
+                    print 'so no merging occurs'
+                    break
+                else: # v not in components[num]
+                    print '%i is in component[%i] but no %i' % (u, num, v)
+                    print 'so merge vertex %i\'s component into component[%i]' % (v, num)
+                    components = merge(components, num, v)
+                    break
+            if v in components[num]: # u not in components[num]
+                    print '%i is in component[%i] but no %i' % (v, num, u)
+                    print 'so merge vertex %i\'s component into component[%i]' % (u, num)
+                    components = merge(components, num, u)
+                    break
     return len(components)
+
+
+def initialiseComponents(vertices):
+    components = OrderedDict()
+    for vertex in vertices:
+        components[vertex] = [vertex]
+    return components
+    
+
+# This function is why I use an OrderedDict: don't need to search through all keys since acquireeVertex is definitely not in num-th component nor any preceding ones
+def merge(components, acquirerIndex, acquireeVertex):
+    for key in components.keys()[num:]:        # find acquiree component
+        if acquireeVertex in components[key]: break
+    components[acquirerIndex] += components[key] 
+    del components[key]
+    return components
+
 
 #
 # End of coursework 2

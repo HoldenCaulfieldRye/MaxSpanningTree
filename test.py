@@ -41,29 +41,32 @@ edges = weightSort(weights)
 print edges
 
 
-# TEST invalidEdges()
+# TEST validEdges()
 # ===================
 print ''
 print ''
-print 'testing invalidEdges()...'
+print 'testing validEdges()...'
+
 # case 1: every vertex has an edge (valid)
+testa = validEdges([1,2,3], [[1,2], [1,3]])
+
 # case 2: some vertices have no edges (valid)
+testb = validEdges([1,2,3], [[1,2]])
+
 # case 3: some edges have no vertices (invalid)
-testa = invalidEdges([1,2,3], [[1,2], [1,3]])
-testb = invalidEdges([1,2,3], [[1,2]])
-testc = invalidEdges([1,2,3], [[1,2], [3,5]])
+testc = validEdges([1,2,3], [[1,2], [3,5]])
 
 if not testa:
-    print 'Error: invalidEdges([1,2,3], [[1,2], [1,3]]) should return true'
+    print 'Error: validEdges([1,2,3], [[1,2], [1,3]]) should return true'
 
 elif not testb:
-    print 'Error: invalidEdges([1,2,3], [[1,2]]) should return true'
+    print 'Error: validEdges([1,2,3], [[1,2]]) should return true'
 
 elif testc:
-    print 'Error: invalidEdges([1,2,3], [[1,2], [3,5]]) should return false'
+    print 'Error: validEdges([1,2,3], [[1,2], [3,5]]) should return false'
 
 else:
-    print 'invalidEdges() tests passed successfully'
+    print 'validEdges() tests passed successfully'
 
 
 # TEST countComponents()
@@ -73,14 +76,7 @@ print ''
 print ''
 print 'testing that countComponents is correct'
 
-# test0 = countComponents([1,2,3], [[1,2],[2,3]])
-# test1 = countComponents([1,2,3], [[2,3]])
-# test2 = countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]])
-# test3 = countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]])
-# test4 = countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0)]) - countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0), (4.0, 1.0)])
 
-
-test1 =
 test = countComponents([], [])
 test = countComponents([], [])
 test = countComponents([], [])
@@ -96,88 +92,18 @@ test = countComponents([], [])
 test = countComponents([], [])
 test = countComponents([], [])
 test = countComponents([], [])
-test = countComponents([], [])
- 
-
-# case 1: uComponent==-1, vComponent==-2
-
-# case 2: uComponent==-1, vComponent==k
-
-# case 3: uComponent==k, vComponent==-2
-
-# case 4: uComponent==k, vComponent==k
-
-# case 5: uComponent==k, vComponent == j != k
-
-# case 6: case 1 followed by case 1
-
-# case 7: case 1 followed by case 2
-
-# case 8: case 1 followed by case 3
-
-# case 9: case 1 followed by 4
-
-# case 10: 1 followed by 5
-
-# case 11: 2, 1
-
-# case 12: 2, 2
-
-# case 13: 2, 3
-
-# case 14: 2, 4
-
-# case 15: 2, 5
-
-# case 16: 3, 1
-
-# case 17: 3, 2
-
-# case 18: 3, 3
-
-# case 19: 3, 4
-
-# case : 3, 5
-
-# case : 4, 1
-
-# case : 4, 2
-
-# case : 4, 3
-
-# case : 4, 4
-
-# case : 4, 5
-
-# case : 5, 1
-
-# case : 5, 2
-
-# case : 5, 3
-
-# case : 5, 4
-
-# case : 5, 5
+test = countComponents([], []) 
 
 
+# check that component merge opportunity gets detected
 
+# check that when merge opportunity detected, components are merged
 
-if test0 != 1:
-    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s', test0
+# check that after merging, obsolete component is deleted
 
-elif test1 != 2:
-    print 'Error: countComponents([1,2,3], [[2,3]]) should be 2, but it\'s', test1
+# check that 'useless' edge doesn't trigger a merge
 
-elif test2 != 3:
-    print 'Error: countComponents([1,2,3,4,5,7], [[1,2],[2,3]]) should be 3, but it\'s', test2
-
-elif test3 != 1:
-    print 'Error: - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]]) + countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) should be 1, and it\'s', test3
-
-elif test4 != 1:
-    print 'Error: adding  (6.0, 1.0) to [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0), (4.0, 1.0)] should decrease number of components by 1, but function it does so by', test4
-else:
-    print 'countComponents tests passed successfully'
+# check that 'useless' edge doesn't delete components
 
 
 #####################################################
