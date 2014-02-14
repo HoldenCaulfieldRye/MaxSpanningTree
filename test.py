@@ -42,19 +42,13 @@ print edges
 
 treeEdges = []
 print 'testing that countComponents is correct'
-# try:
-if countComponents(vertices, treeEdges) != len(vertices):
-    print 'Error: countComponents(%s, []) should be len(vertices)=%i, but it\'s %i' % (vertices, len(vertices), countComponents(vertices, treeEdges))
 if countComponents([1,2,3], [[1,2],[2,3]]) != 1:
     print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s %i' % (countComponents([1,2,3], [[1,2],[2,3]]))
-if countComponents([1,2,3], [[2,3]]) != 2:
+elif countComponents([1,2,3], [[2,3]]) != 2:
     print 'Error: countComponents([1,2,3], [[2,3]]) should be 2, but it\'s %i' % (countComponents([1,2,3], [[2,3]]))
-if countComponents([1,2,3], [[1,5],[7,4],[2,3]]) != 1:
-    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s %i' % (countComponents([1,2,3], [[1,5],[7,4],[2,3]]))
-    # else:
-    #     works = True
-    #     print 'countComponents seems to be working fine'
-    #     print ''
-    #     print 'but have you inspected that createWeightDict and weightSort are correct?'
-# except:
-#     print 'damn, code for countComponents doesn\'t compile'
+elif countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]]) != 3:
+    print 'Error: countComponents([1,2,3,4,5,7], [[1,2],[2,3]]) should be 3, but it\'s %i' % (countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]]))
+else:
+    print 'countComponents tests passed successfully'
+
+print 'moving on the Hepatitis graph, there are %i components' % (countComponents(vertices, treeEdges))
