@@ -203,17 +203,23 @@ def countComponents(vertices, treeEdges):
     print ''
     print ''
     print 'hello, counting components in', vertices, treeEdges
-    components = {0:[]}
-    count = len(vertices)
+    components = {}
+
+    # initialise components
+    for vertex in vertices:
+        components[vertex] = [vertex]
+        
     uComponent, vComponent = -1, -2
 
     # check no invalid edges
+    if invalidEdges(vertices, treeEdges):
+        print 'Error: edges in treeEdges not covered by given vertices'
+        return -1
+        
     verticesInEdges = [edge[0] for edge in treeEdges]
     verticesInEdges += [edge[1] for edge in treeEdges]
     for vertex in verticesInEdges:
         if vertex not in vertices:
-            print 'Error: edges in treeEdges not covered by given vertices'
-            return -1
     
     for [u,v] in treeEdges:
         print '#components = ', count
@@ -257,7 +263,7 @@ def countComponents(vertices, treeEdges):
             
         uComponent, vComponent = -1, -2
 
-    return count
+    return len(components)
 
 #
 # End of coursework 2

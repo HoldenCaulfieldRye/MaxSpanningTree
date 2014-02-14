@@ -41,19 +41,63 @@ edges = weightSort(weights)
 print edges
 
 
+# TEST invalidEdges()
+# ===================
+print ''
+print ''
+print 'testing invalidEdges()...'
+# case 1: every vertex has an edge (valid)
+# case 2: some vertices have no edges (valid)
+# case 3: some edges have no vertices (invalid)
+testa = invalidEdges([1,2,3], [[1,2], [1,3]])
+testb = invalidEdges([1,2,3], [[1,2]])
+testc = invalidEdges([1,2,3], [[1,2], [3,5]])
+
+if not testa:
+    print 'Error: invalidEdges([1,2,3], [[1,2], [1,3]]) should return true'
+
+elif not testb:
+    print 'Error: invalidEdges([1,2,3], [[1,2]]) should return true'
+
+elif testc:
+    print 'Error: invalidEdges([1,2,3], [[1,2], [3,5]]) should return false'
+
+else:
+    print 'invalidEdges() tests passed successfully'
+
 
 # TEST countComponents()
 # ======================
 
+print ''
+print ''
 print 'testing that countComponents is correct'
 
-test0 = countComponents([1,2,3], [[1,2],[2,3]])
-test1 = countComponents([1,2,3], [[2,3]])
-test2 = countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]])
-test3 = countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]])
-test4 = countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0)]) - countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0), (4.0, 1.0)])
+# test0 = countComponents([1,2,3], [[1,2],[2,3]])
+# test1 = countComponents([1,2,3], [[2,3]])
+# test2 = countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]])
+# test3 = countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]])
+# test4 = countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0)]) - countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), (7.0, 1.0), (6.0, 1.0), (4.0, 1.0)])
 
 
+test1 =
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+test = countComponents([], [])
+ 
 
 # case 1: uComponent==-1, vComponent==-2
 
@@ -75,23 +119,23 @@ test4 = countComponents([0,1,2,3,4,5,6,7], [(5.0, 4.0), (4.0, 3.0), (7.0, 0.0), 
 
 # case 10: 1 followed by 5
 
-# case : 2, 1
+# case 11: 2, 1
 
-# case : 2, 2
+# case 12: 2, 2
 
-# case : 2, 3
+# case 13: 2, 3
 
-# case : 2, 4
+# case 14: 2, 4
 
-# case : 2, 5
+# case 15: 2, 5
 
-# case : 3, 1
+# case 16: 3, 1
 
-# case : 3, 2
+# case 17: 3, 2
 
-# case : 3, 3
+# case 18: 3, 3
 
-# case : 3, 4
+# case 19: 3, 4
 
 # case : 3, 5
 
