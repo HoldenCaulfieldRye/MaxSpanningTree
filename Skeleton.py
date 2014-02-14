@@ -151,7 +151,7 @@ def SpanningTreeAlgorithm(depList, noVariables):
     edges = weightSort(weights)
     treeEdges = []
     spanningTree = [vertices, treeEdges]
-    count = countComponents(vertices, treeEdges)
+    count = len(vertices)
 
     print 'initialised vertices, treeEdges to', vertices, treeEdges
     
@@ -204,16 +204,15 @@ def validEdges(vertices, edges):
     verticesInEdges = [edge[0] for edge in edges]
     verticesInEdges += [edge[1] for edge in edges]
     for vertex in verticesInEdges:
-        if vertex not in vertices:
+        count = vertices.count(vertex)
+        if count!=1:
+            print '%i appears %i times in vertex set!' % (vertex, count)
             return False
     return True
 
 
 def countComponents(vertices, edges):
-    print ''
-    print ''
-    print ''
-    print 'hello, counting components in', vertices, edges
+    print '\n\n\nhello, counting components in', vertices, edges
 
     # check no invalid edges
     if not validEdges(vertices, edges):
@@ -227,23 +226,11 @@ def countComponents(vertices, edges):
     # count components
     for [u,v] in edges:
         print '#components = ', len(components.keys())
-        print 'evaluating [%i, %i]' % (u, v) 
-        for num in components.keys():
-            if u in components[num]:
-                if v in components[num]:
-                    print '%i and %i are both in component[%i]' % (u, v, num)
-                    print 'so no merging occurs'
-                    break
-                else: # v not in components[num]
-                    print '%i is in component[%i] but no %i' % (u, num, v)
-                    print 'so merge vertex %i\'s component into component[%i]' % (v, num)
-                    components = merge(components, num, v)
-                    break
-            if v in components[num]: # u not in components[num]
-                    print '%i is in component[%i] but no %i' % (v, num, u)
-                    print 'so merge vertex %i\'s component into component[%i]' % (u, num)
-                    components = merge(components, num, u)
-                    break
+        print 'evaluating [%i, %i]' % (u, v)
+        evalu = evaluateEdge(components, [u,v])
+        if evalu[0] == 'edge fully contained in component':
+        elif evalu[0] == 'connects components':
+            components = merge(components, evalu[1], evalu[2])
     return len(components)
 
 
@@ -254,10 +241,33 @@ def initialiseComponents(vertices):
     return components
     
 
+def evaluateEdge(components, [u,v]):
+    for num in components.keys():
+        if u in components[num]:
+            if v in components[num]:
+                print '%i and %i are both in component[%i] so no merging occurs' % (u, v, num)
+                return 'edge fully contained in component'
+            else: # v not in components[num]
+                print '%i is in component[%i] but %i isn\'t' % (u, num, v)
+                print 'so merge vertex %i\'s component into component[%i]' % (v, num)
+                return 'connects components', num, v
+        elif v in components[num]: # u not in components[num]
+                print '%i is in component[%i] but no %i' % (v, num, u)
+                print 'so merge vertex %i\'s component into component[%i]' % (u, num)
+                return 'connects components', num, u
+
+            
+
 # This function is why I use an OrderedDict: don't need to search through all keys since acquireeVertex is definitely not in num-th component nor any preceding ones
 def merge(components, acquirerIndex, acquireeVertex):
-    for key in components.keys()[num:]:        # find acquiree component
-        if acquireeVertex in components[key]: break
+    found = False
+    for key in components.keys()[num:]: # find acquiree component
+        if acquireeVertex in components[key]:
+            found = True
+            break
+    if found = False:
+        print 'Error: vertex %i not found in components' % (acquireeVertex)
+        return -1
     components[acquirerIndex] += components[key] 
     del components[key]
     return components
