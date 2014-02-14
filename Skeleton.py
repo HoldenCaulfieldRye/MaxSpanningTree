@@ -246,15 +246,15 @@ def evaluateEdge(components, edge):
         if edge[0] in components[num]:
             if edge[1] in components[num]:
                 # print '%i and %i are both in component[%i] so no merging occurs' % (u, v, num)
-                return 'edge fully contained in component'
+                return 'edge fully contained in component', -1, -1
             else: # edge[1] not in components[num]
                 # print '%i is in component[%i] but %i isn\'t' % (u, num, v)
                 # print 'so merge vertex %i\'s component into component[%i]' % (v, num)
-                return 'connects components', num, v
+                return 'connects components', num, edge[1]
         elif edge[1] in components[num]: # edge[0] not in components[num]
                 # print '%i is in component[%i] but no %i' % (v, num, u)
                 # print 'so merge vertex %i\'s component into component[%i]' % (u, num)
-                return 'connects components', num, u
+                return 'connects components', num, edge[0]
 
             
 

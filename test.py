@@ -102,13 +102,13 @@ testc = evaluateEdge(OrderedDict([(2, [0,1])]), [1,0])
 testd = evaluateEdge(OrderedDict([(0, [5,8,2]), (3, [4,7])]), [8,2])
 
 if testa[0] != 'connects components':
-    print 'Error'
+    print 'Error a'
 elif testb[0] != 'connects components':
-    print 'Error'
+    print 'Error b'
 elif testc[0] != 'edge fully contained in component':
-    print 'Error'
+    print 'Error c: output was', testc
 elif testd[0] != 'edge fully contained in component':
-    print 'Error'
+    print 'Error d'
 else:
     print 'evaluateEdge() tests passed successfully'
     
