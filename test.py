@@ -122,8 +122,8 @@ print '\n\ntesting merge()...'
 # check that obsolete component deletion works correctly
 test = merge(OrderedDict([(0, [5,8,2]), (3, [4,7])]), 0, 4)
 
-if test != [5,8,2,4,7]:
-    print 'Error: components did not merge correctly'
+if test != OrderedDict([(0, [5, 8, 2, 4, 7])]):
+    print 'Error: testa'
 elif 3 in test.keys():
     print 'Error: obsolete component was not deleted'
 else:

@@ -261,7 +261,7 @@ def evaluateEdge(components, edge):
 # This function is why I use an OrderedDict: don't need to search through all keys since acquireeVertex is definitely not in num-th component nor any preceding ones
 def merge(components, acquirerIndex, acquireeVertex):
     found = False
-    for key in components.keys()[num:]: # find acquiree component
+    for key in components.keys()[acquirerIndex:]: # find acquiree component
         if acquireeVertex in components[key]:
             found = True
             break
