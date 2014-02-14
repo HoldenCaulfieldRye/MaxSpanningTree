@@ -153,28 +153,28 @@ def SpanningTreeAlgorithm(depList, noVariables):
     spanningTree = [vertices, treeEdges]
     count = len(vertices)
 
-    # print 'initialised vertices, treeEdges to', vertices, treeEdges
+    print 'initialised vertices, treeEdges to', vertices, treeEdges
     
-    while count > 0:
+    while count != 1: # while number of components is not 1
         if edges==[]:
-            # print 'not enough edges to span a tree!'
+            print 'not enough edges to span a tree!'
             break
-        # print 'updated treeEdges from'
-        # print treeEdges 
+        print 'updated treeEdges from'
+        print treeEdges 
         treeEdges.append(edges[0])
         del edges[0]
-        # print 'to'
-        # print treeEdges
+        print 'to'
+        print treeEdges
         if count - countComponents(vertices, treeEdges) == 1:
-            # print 'adding that edge linked 2 components!'
+            print 'adding that edge linked 2 components!'
             count -= 1
-            # print ''
+            print ''
         elif count == countComponents(vertices, treeEdges):
             del treeEdges[-1]
-            # print 'that edge wouldn\'t link components, getting rid of it'
-            # print ''
+            print 'that edge wouldn\'t link components, getting rid of it'
+            print ''
         else:
-            # print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
+            print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
             break
 
     if [vertices, treeEdges] != spanningTree:
