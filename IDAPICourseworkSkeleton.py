@@ -349,12 +349,29 @@ AppendList("results.txt", prior)
 
 
 if __name__ == '__main__':
+
+    f = open('results.txt', 'w')
+    f.write('\nGroup members: Alexandre Dalyac ad6813\n\n')
+
     noVariables, noRoots, noStates, noDataPoints, datain = ReadFile("HepatitisC.txt")
     theData = array(datain)
     MI = array([])
     MI = DependencyMatrix(theData, noVariables, noStates)
+
+    f.write('Dependency matrix for the HepatitisC data set:\n')
+    f.write(MI)
+    f.write('\n\n')
+
     set_printoptions(precision=3)
     set_printoptions(suppress=True)
-    print DependencyList(MI)
-    print(MI), '\n\n'
-    print SpanningTreeAlgorithm(DependencyList(MI), noVariables)
+    depList = DependencyList(MI)
+
+    f.write('Dependency list for the HepatitisC data set:\n')
+    f.write(depList)
+    f.write('\n\n')
+    
+    tree = SpanningTreeAlgorithm(depList, noVariables)
+    f.write('Spanning tree found for the HepatitisC data set: \n\n')    
+    f.write(tree)
+
+    f.close()
