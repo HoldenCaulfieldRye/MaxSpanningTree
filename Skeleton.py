@@ -203,7 +203,7 @@ def weightSort(weights):
 
 def countComponents(vertices, treeEdges):
     components = {0:[]}
-    count = vertices[:]
+    count = len(vertices)
     uComponent, vComponent = -1, -2
 
     # check no invalid edges
@@ -232,31 +232,31 @@ def countComponents(vertices, treeEdges):
             # print 'so #components stays the same at', len(count)
         elif uComponent == -1 and vComponent ==-2:
             # print '%i, %i do not belong to any component: %s' % (u, v, components)
-            components[len(count)-len(vertices)] = []
-            components[len(count)-len(vertices)].append(u)
-            components[len(count)-len(vertices)].append(v)
+            components[count-len(vertices)] = []
+            components[count-len(vertices)].append(u)
+            components[count-len(vertices)].append(v)
             # print 'so created a new component: ', components
             # print 'so #components decremented from', len(count)
-            count.pop()
+            count -= 1
             # print 'to', len(count)
         elif uComponent != -1 and vComponent == -2:
             # print '%i belongs to component[%i]' % (u, uComponent)
             components[uComponent].append(v)
             # print 'so adding %i to it too: components: %s' % (v, components)
             # print 'so #components decremented from', len(count)
-            count.pop()
+            count -= 1
             # print 'to', len(count)
         elif uComponent == -1 and vComponent != -2:
             # print '%i belongs to component[%i]' % (v, vComponent)
             components[vComponent].append(u)
             # print 'so adding %i to it too: components: %s' % (u, components)
             # print 'so #components decremented from', len(count)
-            count.pop()
+            count -= 1
             # print 'to', len(count)
             
         uComponent, vComponent = -1, -2
 
-    return len(count)
+    return count
 
 #
 # End of coursework 2
