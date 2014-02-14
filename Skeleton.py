@@ -151,17 +151,25 @@ def SpanningTreeAlgorithm(depList, noVariables):
     treeEdges = []
     spanningTree = [vertices, treeEdges]
     count = countComponents(vertices, treeEdges)
+
+    print 'initialised vertices, treeEdges to', vertices, treeEdges
     
     while count > 0:
         if edges==[]:
             print 'not enough edges to span a tree!'
             break
+        print 'updated treeEdges from', treeEdges 
         treeEdges.append(edges[0])
         del edges[0]
+        print 'to', treeEdges
         if count - countComponents(vertices, treeEdges) == 1:
+            print 'adding that edge linked 2 components!'
             count -= 1
+            print ''
         elif count == countComponents(vertices, treeEdges):
             del treeEdges[-1]
+            print 'that edge wouldn\'t link components, getting rid of it'
+            print ''
         else:
             print 'Error: adding edge', treeEdge[-1], 'to spanningTree changed the number of components by', count - countComponents(vertices, treeEdges),'; that\'s absurd'
             break
@@ -170,19 +178,6 @@ def SpanningTreeAlgorithm(depList, noVariables):
         print "Error: spanningTree isn't a pointer; treeEdges has been modified but this hasn't updated spanningTree"
         
     return array(spanningTree)
-
-
-# def undirectedDependencyList(depList):
-#     for i in range(len(depList)):
-#         for j in range(i):
-#             if depList[i][j] >= depList[j][i]:
-                
-                
-#     for i,j in zip(range(len(depList))):
-        
-#             depList.append([depMatrix[i][j], i, j])
-#     depList2 = sorted(depList, reverse=True)
-#     return depList2
     
 
 def createWeightDict(depList, noVariables):
@@ -202,6 +197,10 @@ def weightSort(weights):
 
 
 def countComponents(vertices, treeEdges):
+    print ''
+    print ''
+    print ''
+    print 'hello, counting components in', vertices, treeEdges
     components = {0:[]}
     count = len(vertices)
     uComponent, vComponent = -1, -2
@@ -215,44 +214,44 @@ def countComponents(vertices, treeEdges):
             return -1
     
     for [u,v] in treeEdges:
-        # print '#components = ', len(count)
-        # print 'evaluating [%i, %i]' % (u, v) 
+        print '#components = ', count
+        print 'evaluating [%i, %i]' % (u, v) 
         for num in components.keys():
             if u in components[num]:
                 assert(uComponent==-1)
-                # print u, 'is in', components[num]
+                print u, 'is in', components[num]
                 uComponent = num
             if v in components[num]:
                 assert(vComponent==-2)
-                # print v, 'is in', components[num]
+                print v, 'is in', components[num]
                 vComponent = num
 
-        if uComponent == vComponent: continue
-            # print '%i, %i do both belong to %s' % (u, v, components[uComponent])
-            # print 'so #components stays the same at', len(count)
+        if uComponent == vComponent:# continue
+            print '%i, %i do both belong to component[%i]: %s' % (u, v, uComponent, components[uComponent])
+            print 'so #components stays the same at', count
         elif uComponent == -1 and vComponent ==-2:
-            # print '%i, %i do not belong to any component: %s' % (u, v, components)
-            components[count-len(vertices)] = []
-            components[count-len(vertices)].append(u)
-            components[count-len(vertices)].append(v)
-            # print 'so created a new component: ', components
-            # print 'so #components decremented from', len(count)
+            print '%i, %i do not belong to any component: %s' % (u, v, components)
+            components[len(components.keys())] = []
+            components[len(components.keys())-1].append(u)
+            components[len(components.keys())-1].append(v)
+            print 'so created a new component: ', components
+            print 'so #components decremented from', count
             count -= 1
-            # print 'to', len(count)
+            print 'to', count
         elif uComponent != -1 and vComponent == -2:
-            # print '%i belongs to component[%i]' % (u, uComponent)
+            print '%i belongs to component[%i]' % (u, uComponent)
             components[uComponent].append(v)
-            # print 'so adding %i to it too: components: %s' % (v, components)
-            # print 'so #components decremented from', len(count)
+            print 'so adding %i to it too: components: %s' % (v, components)
+            print 'so #components decremented from', count
             count -= 1
-            # print 'to', len(count)
+            print 'to', count
         elif uComponent == -1 and vComponent != -2:
-            # print '%i belongs to component[%i]' % (v, vComponent)
+            print '%i belongs to component[%i]' % (v, vComponent)
             components[vComponent].append(u)
-            # print 'so adding %i to it too: components: %s' % (u, components)
-            # print 'so #components decremented from', len(count)
+            print 'so adding %i to it too: components: %s' % (u, components)
+            print 'so #components decremented from', count
             count -= 1
-            # print 'to', len(count)
+            print 'to', count
             
         uComponent, vComponent = -1, -2
 

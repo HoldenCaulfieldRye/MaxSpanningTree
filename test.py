@@ -42,13 +42,29 @@ print edges
 
 treeEdges = []
 print 'testing that countComponents is correct'
-if countComponents([1,2,3], [[1,2],[2,3]]) != 1:
-    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s %i' % (countComponents([1,2,3], [[1,2],[2,3]]))
-elif countComponents([1,2,3], [[2,3]]) != 2:
-    print 'Error: countComponents([1,2,3], [[2,3]]) should be 2, but it\'s %i' % (countComponents([1,2,3], [[2,3]]))
-elif countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]]) != 3:
-    print 'Error: countComponents([1,2,3,4,5,7], [[1,2],[2,3]]) should be 3, but it\'s %i' % (countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]]))
+
+test0, test1, test2, test3 = countComponents([1,2,3], [[1,2],[2,3]]), countComponents([1,2,3], [[2,3]]), countComponents([1,2,3,4,5,7], [[1,5],[7,4],[2,3]]), countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]])
+
+if test0 != 1:
+    print 'Error: countComponents([1,2,3], [[1,2],[2,3]]) should be 1, but it\'s', test0
+
+elif test1 != 2:
+    print 'Error: countComponents([1,2,3], [[2,3]]) should be 2, but it\'s', test1
+
+elif test2 != 3:
+    print 'Error: countComponents([1,2,3,4,5,7], [[1,2],[2,3]]) should be 3, but it\'s', test2
+
+elif test3 != 1:
+    print 'Error: - countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0], [7, 1]]) + countComponents([0,1,2,3,4,5,6,7], [[5, 4], [4, 3], [7, 0]]) should be 1, and it\'s', test3
+    
 else:
     print 'countComponents tests passed successfully'
 
-print 'moving on the Hepatitis graph, there are %i components' % (countComponents(vertices, treeEdges))
+
+# #####################################################
+
+# print 'moving on to finding maxweight tree'
+
+# tree = SpanningTreeAlgorithm(depList, noVariables)
+
+# print 'tree found:', tree
